@@ -1,0 +1,1 @@
+# plugins-fix-alt-text
