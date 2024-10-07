@@ -1,0 +1,108 @@
+
+.content-body table .column-id {
+    width: 50px;
+}
+
+.content-body table .column-image_preview {
+    text-align: center;
+    width: 100px;
+}
+
+.content-body table .column-image_issues {
+    width: 215px;
+}
+
+.content-body table .column-file_name {
+    width: 30%;
+}
+
+.content-body table tr.type-error .column-message {
+    border-left: 3px solid red;
+}
+
+.content-body table tr.type-error .column-type {
+    color: red;
+    font-weight: bold;
+}
+
+.content-body table tr.type-warning .column-message {
+    border-left: 3px solid orange;
+}
+
+.content-body table tr.type-warning .column-type,
+.content-body table tr.type-command .column-type {
+    color: black;
+    font-weight: bold;
+}
+
+.content-body table tr.type-notice .column-path {
+    border-left: 3px solid #3582c4;
+}
+
+.content-body table tr.type-command .column-message {
+    background: black;
+    color: white;
+}
+
+.content-body table tr.type-notice .column-message {
+    border-left: 3px solid cornflowerblue;
+}
+
+.content-body table td .image-preview-modal {
+    background: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    width: 45%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 9999999;
+    overflow: auto;
+    text-align: center;
+    padding: 30px;
+}
+
+.content-body table td .image-preview-modal img {
+    max-width: calc(50vw - 60px);
+    max-height: calc(100vh - 60px);
+}
+
+.content-body table td .image-preview-modal .dashicons {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 13px;
+    color: #ccc;
+    font-size: 25px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.content-body table td .image-preview-thumbnail-wrap {
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+}
+
+.content-body table td .image-preview-thumbnail-wrap .dashicons-hidden {
+    display: none;
+}
+
+.content-body table td.on .image-preview-thumbnail-wrap .dashicons-hidden {
+    display: block;
+    z-index: 1;
+    position: absolute;
+    left: calc((100% - 30px) / 2);
+    font-size: 30px;
+    color: gray;
+    width: 30px;
+    height: 30px;
+    top: calc((100% - 35px) / 2);
+}
+
+.content-body table td.on .image-preview-thumbnail {
+    filter: brightness(20%)
+}
+
+.tools_page_fix-alt-text .content-body {
+    max-width: unset !important;
+}
