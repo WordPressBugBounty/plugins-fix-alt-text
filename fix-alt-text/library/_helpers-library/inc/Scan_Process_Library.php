@@ -1406,7 +1406,6 @@ class Scan_Process_Library {
 
 				while ( $row = $result->fetch_object() ) {
 
-
 					$queue = [];
 
 					if ( $row->queue ) {

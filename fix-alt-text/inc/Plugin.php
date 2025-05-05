@@ -27,15 +27,17 @@ final class Plugin extends Plugin_Library {
 	 */
 	public static function init(): void {
 
-		// Load Only The Assets
-		self::load_only();
-
 		Debug::init();
+
+		parent::init();
+
+		if ( FIXALTTEXT_IS_HEARTBEAT && ! wp_doing_cron() ) {
+			// Heartbeat without WP_Cron running. Let's not load the entire plugin. Our functionality does not rely on autosave or any other heartbeat activities. This is helpful as the heartbeat conflicts with XDebug sessions.
+			return;
+		}
 
 		// Check for needed migrations of older plugin versions
 		self::check_migrations();
-
-		parent::init();
 
 		// Register all class hooks
 		Table_AJAX::init();
@@ -50,24 +52,6 @@ final class Plugin extends Plugin_Library {
 			// Load Frontend
 			Frontend::init();
 		}
-
-		// Create Tables For New Blog
-		add_action( 'wp_insert_site', [
-			self::class,
-			'wp_insert_site',
-		] );
-
-		// Removes Tables For Old Blog
-		add_action( 'wp_delete_site', [
-			self::class,
-			'wp_delete_site',
-		] );
-
-		// Register enable plugin process
-		register_activation_hook( FIXALTTEXT_FILE, [
-			self::class,
-			'enable_plugin',
-		] );
 
 	}
 

@@ -27,8 +27,11 @@ const { __ } = wp.i18n;
                 body.on('input', '#attachment-details-alt-text', FixAltText.editPost.changeAltText);
             }
 
-            // Force Alt Text on WP Block Image
+            // Force Alt Text on WP Block Image version 6.6+
             body.on('mouseover', '.edit-post-header__settings .is-primary, .edit-post-header__settings .editor-post-save-draft', FixAltText.editPost.wpBlockImage);
+
+            // Legacy settings version 6.X and below
+            body.on('mouseover', '.editor-header__settings .is-primary, .editor-header__settings .editor-post-save-draft', FixAltText.editPost.wpBlockImage);
 
             // console.log('init edit-post.js');
         },

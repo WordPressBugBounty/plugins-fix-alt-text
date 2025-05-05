@@ -66,7 +66,7 @@ final class Migration extends Migration_Library {
 		}
 
 		Notification::add_notification( [
-			'message' => __( 'Fix Alt Text upgraded to version 1.9.0. There are new settings available under detect issues. Please review your settings and run a new scan. See Changelog for details.', FIXALTTEXT_SLUG ),
+			'message' => __( 'Fix Alt Text upgraded to version 1.9.0. There are new settings available under Alt Text Issues. Please review your settings and run a new scan. See Changelog for details.', FIXALTTEXT_SLUG ),
 			'link_url' => admin_url( FIXALTTEXT_SETTINGS_URI ),
 			'link_anchor_text' => __( 'View Settings', FIXALTTEXT_SLUG ),
 			'alert_level' => 'notice',
@@ -138,7 +138,7 @@ final class Migration extends Migration_Library {
 		/**
 		 * Cancel any scans that may be stuck
 		 */
-		Scan::stop_all_scans( __( 'All scans cancelled due to migration to Fix Alt Text version 1.2.0.', FIXALTTEXT_SLUG ) );
+		Scans::stop_all_scans( __( 'All scans cancelled due to migration to Fix Alt Text version 1.2.0.', FIXALTTEXT_SLUG ) );
 
 		/**
 		 * Improvement: DB table columns tuned for performance

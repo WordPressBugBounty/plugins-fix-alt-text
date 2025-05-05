@@ -4,7 +4,7 @@ namespace FixAltText;
 
 define( 'FIXALTTEXT_NAME', 'Fix Alt Text' );
 define( 'FIXALTTEXT_SLUG', 'fix-alt-text' );
-define( 'FIXALTTEXT_VERSION', '1.9.0' );
+define( 'FIXALTTEXT_VERSION', '1.9.1' );
 define( 'FIXALTTEXT_MIN_PHP', '7.4.0' );
 define( 'FIXALTTEXT_MIN_WP', '5.3.0' );
 define( 'FIXALTTEXT_WP_URL', 'https://wordpress.org/plugins/fix-alt-text/');
@@ -16,7 +16,7 @@ define( 'FIXALTTEXT_WP_URL', 'https://wordpress.org/plugins/fix-alt-text/');
  * @license   http://www.gnu.org/licenses/gpl-3.0.html GNU General Public License, version 3 or higher
  *
  * Plugin Name: Fix Alt Text
- * Version: 1.9.0
+ * Version: 1.9.1
  * Plugin URI: https://fixalttext.com
  * Description: Find issues with your image alt text easily and fix them faster with Fix Alt Text. You can even force users to use alt text when adding images in Gutenberg or Classic editors.
  * Author: Fix Alt Text
@@ -43,15 +43,22 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 
 	if ( check_compatibility() ) {
 
-		if ( FIXALTTEXT_IS_HEARTBEAT && ! wp_doing_cron() ) {
-			// Heartbeat without WP_Cron running. Let's not load the entire plugin. Our functionality does not rely on autosave or any other heartbeat activities. This is helpful as the heartbeat conflicts with XDebug sessions.
-			return;
-		}
-
 		require_once( __DIR__ . '/inc/Plugin.php' );
 
-		// Initialize Plugin
-		Plugin::init();
+		// Load Only The Assets
+		Plugin::load_only();
+
+		// Register enable plugin process
+		register_activation_hook( FIXALTTEXT_FILE, [ Plugin::class, 'enable_plugin' ] );
+
+		// Initialize the plugin
+		add_action( 'init', [ Plugin::class, 'init' ], 0, 0 );
+
+		// Create Tables For New Blog
+		add_action( 'wp_insert_site', [ Plugin::class, 'wp_insert_site' ] );
+
+		// Removes Tables For Old Blog
+		add_action( 'wp_delete_site', [ Plugin::class, 'wp_delete_site' ] );
 
 	} else {
 		if ( defined( 'FIXALTTEXT_COMPATIBLE_ERROR' ) ) {
@@ -62,6 +69,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 			}
 		}
 	}
+
 }
 
 /**

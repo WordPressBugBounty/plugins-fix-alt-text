@@ -314,7 +314,7 @@ final class Table_AJAX {
 						$new_image = addslashes($new_image);
 					}
 
-					// @todo Known Bug: If two <img> tags are identical in the DOM, then both will have their alt text updated t the same time.
+					// @todo Known Bug: If two <img> tags are identical in the DOM, then both will have their alt text updated at the same time.
 					// replace old image with new image
 					$html = str_replace( $old_image_orig, trim($new_image), $html );
 

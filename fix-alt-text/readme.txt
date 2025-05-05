@@ -3,8 +3,8 @@ Contributors: stevenayers63, jdorner
 Tags: accessibility, alt text, image alt text, image seo, accessible
 Requires at least: 5.3
 Requires PHP: 7.4
-Tested up to: 6.6.1
-Stable tag: 1.9.0
+Tested up to: 6.8.1
+Stable tag: 1.9.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -69,6 +69,18 @@ Unfortunately, as a site grows, it becomes difficult and time-consuming to edit 
 * Patch - x.x.1 increase is a bug fix, security fix, or minor improvement and does not introduce new features. (non-breaking changes)
 
 NOTICE: Release detail should be arranged by category per this order: New Feature, Improvement, Minor Improvement, Bug Fix, Security, Note
+
+= Version 1.9.1 =
+*Release Date - 05 May 2025
+
+* Bug Fix: Empty space in the content was causing a fatal error during the scan causing the scan to get hung. Thank you @websitesbuiltforyou
+* Bug Fix: Scan::stop_all_scans() was throwing fatal error on migration upgrade for version 1.3 due to a wrong class reference.
+* Bug Fix: When editing a post, the force alt text was not prompting the user before they attempt to save the post.
+* Bug Fix: PHP Warning fixed regarding calling translations too early
+* Bug Fix: Menu should not be listed as a potion to scan; it has been removed.
+* Security: Uninstall script when accessed directly was not verifying that the user had capability to delete plugins
+* Note: Version 2.0 will have minimum requirements of WP v6.1.0 and PHP 8.1.0
+* Note: Tested up to: 6.8.1
 
 = Version 1.9.0 =
 *Release Date - 31 Aug 2024

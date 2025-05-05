@@ -44,7 +44,10 @@ final class Admin extends Admin_Library {
 	}
 
 	/**
-	 * Loads the references table
+	 * Loads the references table when the 'references' tab is active.
+	 *
+	 * This method initializes the references table by including the required file
+	 * and creating an instance of the References_Table class.
 	 *
 	 * @return void
 	 */

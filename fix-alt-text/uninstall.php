@@ -33,6 +33,11 @@ if ( defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	// Load WordPress
 	require( dirname( __DIR__, 3 ) . '/wp-load.php' );
 
+	// Check user capability
+	if ( ! current_user_can( 'delete_plugins' ) ) {
+		die( 'You do not have permission to uninstall Fix Alt Text.' );
+	}
+
 	// Load plugin
 	require_once( __DIR__ . '/fix-alt-text.php' );
 

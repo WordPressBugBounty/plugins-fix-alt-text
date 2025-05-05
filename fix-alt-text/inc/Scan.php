@@ -89,8 +89,8 @@ final class Scan extends Scan_Library {
 
 		//------------- USERS ----------------------------------------------//
 
-		// @todo profile_update scan
-		// @todo deleted_user scan
+		// @todo profile_update scan (add this in Version 2.0)
+		// @todo deleted_user scan (add this in Version 2.0)
 
 	}
 
@@ -510,52 +510,67 @@ final class Scan extends Scan_Library {
 			return [];
 		}
 
+		// Remove empty spaces
+		$html = trim( $html );
+
 		// Require HTML
 		if ( empty( $html ) ) {
 			return [];
 		}
 
-		// Empty array to hold all links to return
-		$all_references = [];
-
-		// Create DOM structure so we can reliably grab all img tags
-		$dom = new DOMDocument();
-
-		// Silence warnings
-		libxml_use_internal_errors( true );
-
 		// Ensure we are using UTF-8 Encoding
 		$html = htmlspecialchars_decode( htmlentities( $html, ENT_COMPAT, 'utf-8', false ) );
 
-		// Load the URL's content into the DOM
-		$dom->loadHTML( $html, LIBXML_HTML_NODEFDTD | LIBXML_HTML_NOIMPLIED );
+		// Empty array to hold all links to return
+		$all_references = [];
 
-		$images = $dom->getElementsByTagName( 'img' );
-		$image_index = 0;
+		try {
+			// Create DOM structure so we can reliably grab all img tags
+			$dom = new DOMDocument();
 
-		// Ensure we have default values
-		$args['from_post_id'] = $args['from_post_id'] ?? 0;
-		$args['from_post_type'] = $args['from_post_type'] ?? '';
-		$args['from_where'] = $args['from_where'] ?? '';
-		$args['from_where_key'] = $args['from_where_key'] ?? '';
+			// Silence warnings
+			libxml_use_internal_errors( true );
 
-		// Loop through each <img> tag in the dom and add it to the link array
-		foreach ( $images as $img ) {
+			// Load the URL's content into the DOM
+			$dom->loadHTML( $html, LIBXML_HTML_NODEFDTD | LIBXML_HTML_NOIMPLIED );
 
-			// Inherit base details from args
-			$ref = $args;
+			$images = $dom->getElementsByTagName( 'img' );
+			$image_index = 0;
 
-			// Fixing legacy code from breaking Gutenburg Editor
-			$img->removeAttribute( 'id' );
+			// Ensure we have default values
+			$args['from_post_id'] = $args['from_post_id'] ?? 0;
+			$args['from_post_type'] = $args['from_post_type'] ?? '';
+			$args['from_where'] = $args['from_where'] ?? '';
+			$args['from_where_key'] = $args['from_where_key'] ?? '';
 
-			$ref['image_index'] = $image_index;
-			$ref['image_url'] = $img->getAttribute( 'src' );
-			$ref['image_alt_text'] = $img->getAttribute( 'alt' );
+			// Loop through each <img> tag in the dom and add it to the link array
+			foreach ( $images as $img ) {
 
-			$all_references[] = new Reference( $ref );
+				// Inherit base details from args
+				$ref = $args;
 
-			++ $image_index;
+				// Fixing legacy code from breaking Gutenburg Editor
+				$img->removeAttribute( 'id' );
 
+				$ref['image_index'] = $image_index;
+				$ref['image_url'] = $img->getAttribute( 'src' );
+				$ref['image_alt_text'] = $img->getAttribute( 'alt' );
+
+				$all_references[] = new Reference( $ref );
+
+				++ $image_index;
+
+			}
+		} catch ( \Throwable $e ) {
+			// Failed; but we don't want the scan to get hung
+
+			$error_message = 'get_from_html() failed: ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine() . ' $html: ' . print_r( $html, 1 );
+
+			// Put in the debug log
+			Debug::log( $error_message, 'error' );
+
+			// Put in the PHP error log
+			error_log( $error_message );
 		}
 
 		// Done silencing errors

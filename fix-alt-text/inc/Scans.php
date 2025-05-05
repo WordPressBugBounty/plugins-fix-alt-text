@@ -21,7 +21,6 @@ class Scans extends Scans_Library {
 
 		return [
 			'all',
-			'menus',
 			'users',
 			'post-types',
 			'taxonomies',

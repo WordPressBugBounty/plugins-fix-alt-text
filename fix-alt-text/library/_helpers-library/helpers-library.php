@@ -4,7 +4,7 @@ namespace FixAltText\HelpersLibrary;
 // Prevent Direct Access
 ( defined( 'ABSPATH' ) ) || die;
 
-$this_version = '1.7.0';
+$this_version = '1.7.1';
 $min_php_version = '7.4.0';
 /**
  * Helpers Library
@@ -14,7 +14,7 @@ $min_php_version = '7.4.0';
  *
  * Plugin Name: Helpers Library
  * Plugin URI: https://gitlab.com/sovdeveloping/helpers-library
- * Version: 1.7.0
+ * Version: 1.7.1
  * Description: This library is an add-on for plugins so the visual WordPress admin interface can be easily  implemented for a plugin.
  * Author: Steven Ayers
  * Author URI: https://profiles.wordpress.org/stevenayers63/
